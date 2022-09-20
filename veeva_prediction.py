@@ -37,8 +37,10 @@ def predictNext(future, Rx):
     y_pred = b[0] + b[1] * x
     prediction = predict_values(b, future)
     return int(prediction)  # final predicted prescribed drugs for the CONSTth month
-    
-@app.route("/profile/<int:id>", methods=["GET"])
+
+# Static route URLs can only get us so far, as modern-day web applications are rarely straightforward
+# Let's say we want to create a profile page for every doctor that has stats within our app:
+@app.route("/profile/<int:id>", methods=["GET"]) # When defining our route, values within carrot brackets <> indicate a variable; this enables routes to be dynamically generated 
 def show_post(id):
     # show the post with the given id, the id is an integer
     for user in query_db("select * from mydb where id=" + str(id) + ";"):
@@ -85,6 +87,6 @@ def show_post(id):
                 x["TRx_Month_6"],
             ],
         )
-
+    # converts our created dictionary "x" into json format
     y = json.dumps(x)
     return y
